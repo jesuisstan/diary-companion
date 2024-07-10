@@ -34,6 +34,9 @@
     "extra": {
       "router": {
         "origin": false
+      },
+      "eas": {
+        "projectId": "4413a3cc-65ad-429b-8fb2-79e80c681e54"
       }
     },
     "owner": "jesuisstan"
