@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
-import { C42_GREEN } from '@/style/Colors';
+import { C42_TEXT } from '@/style/Colors';
 
 interface ButtonProps {
   title: string;
@@ -16,7 +16,7 @@ const Button42: React.FC<ButtonProps> = ({
 }) => {
   return (
     <Pressable
-      style={[styles.button, { backgroundColor: C42_GREEN }]}
+      style={[styles.button, { backgroundColor: C42_TEXT }]}
       onPress={onPress}
     >
       <Text style={styles.text}>{title}</Text>

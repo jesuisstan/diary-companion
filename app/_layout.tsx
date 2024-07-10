@@ -3,9 +3,9 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { View, StyleSheet, StatusBar, Text } from 'react-native';
+import { View, StyleSheet, StatusBar } from 'react-native';
 
-import { C42_VIOLET } from '@/style/Colors';
+import { C42_GREEN } from '@/style/Colors';
 import LoginScreen from '@/components/LoginScreen';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -32,7 +32,7 @@ const RootLayout = () => {
     <View style={styles.container}>
       <StatusBar
         animated={true}
-        backgroundColor={C42_VIOLET}
+        backgroundColor={C42_GREEN}
         barStyle={'dark-content'}
         showHideTransition={'slide'}
         hidden={false}

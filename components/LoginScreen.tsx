@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { View, StyleSheet, StatusBar, Text } from 'react-native';
 
-import { C42_VIOLET } from '@/style/Colors';
+import { C42_GREEN, C42_VIOLET } from '@/style/Colors';
 import Button42 from '@/components/ui/Button42';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -29,7 +29,7 @@ const LoginScreen = () => {
     <>
       <StatusBar
         animated={true}
-        backgroundColor={C42_VIOLET}
+        backgroundColor={C42_GREEN}
         barStyle={'dark-content'}
         showHideTransition={'slide'}
         hidden={false}
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     alignContent: 'center',
     justifyContent: 'center',
-    backgroundColor: C42_VIOLET,
+    backgroundColor: C42_GREEN,
     alignItems: 'center'
   }
 });

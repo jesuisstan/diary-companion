@@ -3,11 +3,12 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
+    "preinstall": "npm install -g eas-cli",
     "start": "expo start",
-    "android:go": "expo start --android",
     "android:build:local:dev": "expo run:android",
     "android:build:cloud:prod": "npx eas build -p android --profile production",
     "android:build:cloud:dev": "npx eas build -p android --profile development",
+    "android:go": "expo start --android",
     "ios:go": "expo start --ios",
     "web:go": "expo start --web",
     "lint": "expo lint",
@@ -47,7 +48,7 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "@types/react-native": "^0.73.0",
-    "rimraf": "^5.0.5",
+    "rimraf": "^6.0.1",
     "typescript": "~5.3.3"
   },
   "private": true

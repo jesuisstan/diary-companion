@@ -69,7 +69,7 @@ const TabLayout = () => {
       {/*<View style={[styles.header]}></View>*/}
       <StatusBar
         animated={true}
-        backgroundColor={colors42.C42_GREEN_DARK}
+        backgroundColor={colors42.C42_GREEN}
         barStyle={'dark-content'}
         showHideTransition={'slide'}
         hidden={false}
@@ -90,7 +90,7 @@ const TabLayout = () => {
 const styles = StyleSheet.create({
   header: {
     height: 100,
-    backgroundColor: colors42.C42_GREEN_DARK,
+    backgroundColor: colors42.C42_GREEN,
     zIndex: 1
   },
   container: {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   tabBar: {
-    backgroundColor: colors42.C42_GREEN_DARK,
+    backgroundColor: colors42.C42_GREEN,
     paddingTop: 5
   },
   indicator: {
