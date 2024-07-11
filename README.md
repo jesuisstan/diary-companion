@@ -1,6 +1,9 @@
-# Welcome to your Expo app 👋
-
+# Welcome to the Diary Companion modile app 👋
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+## Requiements:
+- JavaScript version >=20
+- Java Development Kit (JDK) [AdoptOpenJDK page](https://adoptium.net/)
 
 ## Get started
 

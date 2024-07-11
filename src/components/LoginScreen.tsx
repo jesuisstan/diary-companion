@@ -1,22 +1,19 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { View, StyleSheet, StatusBar } from 'react-native';
+import { View, StyleSheet, StatusBar, Text } from 'react-native';
 
-import { C42_GREEN } from '@/style/Colors';
-import LoginScreen from '@/components/LoginScreen';
+import { C42_GREEN, C42_VIOLET } from '@/style/Colors';
+import Button42 from '@/components/ui/Button42';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-const RootLayout = () => {
+const LoginScreen = () => {
   const [loaded] = useFonts({
-    DMSans: require('../assets/fonts/DMSans-Regular.ttf')
+    DMSans: require('../../assets/fonts/DMSans-Regular.ttf')
   });
-  const loggedIn = false; // debug
-  //const loggedIn = true; // debug
 
   useEffect(() => {
     if (loaded) {
@@ -29,7 +26,7 @@ const RootLayout = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <>
       <StatusBar
         animated={true}
         backgroundColor={C42_GREEN}
@@ -37,24 +34,28 @@ const RootLayout = () => {
         showHideTransition={'slide'}
         hidden={false}
       />
-      {/* Main Content */}
-      {loggedIn ? (
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      ) : (
-        <LoginScreen />
-      )}
-    </View>
+      <View style={styles.container}>
+        <Text>Not logged in</Text>
+        <Button42
+          title="Login"
+          onPress={() => {
+            console.log('Login clicked');
+          }}
+        />
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative'
+    position: 'relative',
+    alignContent: 'center',
+    justifyContent: 'center',
+    backgroundColor: C42_GREEN,
+    alignItems: 'center'
   }
 });
 
-export default RootLayout;
+export default LoginScreen;
