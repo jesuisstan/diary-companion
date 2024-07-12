@@ -1,0 +1,8 @@
+Configuration: Build Credentials K-0Uj18gVm (Default)
+Keystore
+Type                JKS
+Key Alias           4aa691cfcc2c9b620eabc4235f1e2da3
+MD5 Fingerprint     17:86:14:B2:38:99:37:EC:5D:FE:75:7E:E0:3D:07:56
+SHA1 Fingerprint    31:53:03:C4:C3:E6:E9:42:97:05:C3:00:B0:D1:F3:80:42:ED:DA:8C
+SHA256 Fingerprint  46:A0:09:2B:7E:9E:0D:05:E6:4F:FD:AA:B7:2D:94:2B:73:79:8E:9F:53:A6:11:D4:C4:78:D5:21:52:5E:E5:1B
+Updated             3 seconds ago

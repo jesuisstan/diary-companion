@@ -12,11 +12,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#00babc"
     },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.krivtsoff.diary.companion42",
-      "googleServicesFile": "./GoogleService-Info.plist"
-    },
     "android": {
       "package": "com.krivtsoff.diary.companion42",
       "adaptiveIcon": {

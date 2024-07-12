@@ -36,12 +36,12 @@ const RootLayout = () => {
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyA1rH29rCYP8L7C45Rf3YAoJ1oypjk6N0g",
-    authDomain: "diary-companion-428814.firebaseapp.com",
-    projectId: "diary-companion-428814",
-    storageBucket: "diary-companion-428814.appspot.com",
-    messagingSenderId: "903151581193",
-    appId: "1:903151581193:web:f369c7a8c9bfc64ff6e0d8"
+    apiKey: "AIzaSyC7wmWxBueAM6PbqaIz7GMr_GeEKCl45d0",
+    authDomain: "diary-companion42.firebaseapp.com",
+    projectId: "diary-companion42",
+    storageBucket: "diary-companion42.appspot.com",
+    messagingSenderId: "253645402800",
+    appId: "1:253645402800:web:fd11696bf960710d720175"
   };
 
   // Initialize Firebase
