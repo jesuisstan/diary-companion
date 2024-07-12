@@ -1,61 +1,63 @@
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-import { View, StyleSheet, StatusBar, Text } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { Button, StyleSheet, Text, View } from "react-native";
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from "@react-native-google-signin/google-signin";
+import { useEffect, useState } from "react";
 
-import { C42_GREEN, C42_VIOLET } from '@/style/Colors';
-import Button42 from '@/components/ui/Button42';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-const LoginScreen = () => {
-  const [loaded] = useFonts({
-    DMSans: require('../../assets/fonts/DMSans-Regular.ttf')
-  });
+export default function LoginScreen() {
+  const [error, setError] = useState();
+  const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+    GoogleSignin.configure({
+      webClientId:
+        "89153556013-v985oo4me6scftsvd8skju6kkmi6o4dp.apps.googleusercontent.com",
+    });
+  }, []);
 
-  if (!loaded) {
-    return null;
-  }
+  const signin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const user = await GoogleSignin.signIn();
+      setUserInfo(user);
+      setError();
+    } catch (e) {
+      setError(e);
+      console.log(JSON.stringify(e));
+    }
+  };
+
+  const logout = () => {
+    setUserInfo();
+    GoogleSignin.revokeAccess();
+    GoogleSignin.signOut();
+  };
 
   return (
-    <>
-      <StatusBar
-        animated={true}
-        backgroundColor={C42_GREEN}
-        barStyle={'dark-content'}
-        showHideTransition={'slide'}
-        hidden={false}
-      />
-      <View style={styles.container}>
-        <Text>Not logged in</Text>
-        <Button42
-          title="Login"
-          onPress={() => {
-            console.log('Login clicked');
-          }}
+    <View style={styles.container}>
+      {/*<Text>{JSON.stringify(error)}</Text>*/}
+      {userInfo && <Text>{JSON.stringify(userInfo.user)}</Text>}
+      {userInfo ? (
+        <Button title="Logout" onPress={logout} />
+      ) : (
+        <GoogleSigninButton
+          size={GoogleSigninButton.Size.Standard}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={signin}
         />
-      </View>
-    </>
+      )}
+      <StatusBar style="auto" />
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
-    alignContent: 'center',
-    justifyContent: 'center',
-    backgroundColor: C42_GREEN,
-    alignItems: 'center'
-  }
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
-
-export default LoginScreen;
