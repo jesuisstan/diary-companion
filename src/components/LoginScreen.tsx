@@ -11,8 +11,7 @@ import { useState, useEffect } from 'react';
 
 const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
   GoogleSignin.configure({
-    webClientId:
-      '253645402800-ejjlp11q87nof0v4k3744b11n5i3tu4h.apps.googleusercontent.com', // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
     //scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     forceCodeForRefreshToken: true // [Android] related to `serverAuthCode`, read the docs link below *.
@@ -32,12 +31,9 @@ const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
   }, []);
 
   const onGoogleButtonPress = async () => {
-    console.log('Google button pressed');
     try {
       await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
-      console.log('ID TOKEN !!!!!!!!!', idToken);
-
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       const user_sign_in = await auth().signInWithCredential(googleCredential);
       console.log('Signed in with Google! User:', user_sign_in);

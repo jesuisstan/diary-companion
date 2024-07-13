@@ -51,7 +51,7 @@ const RootLayout = () => {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   //const db = getFirestore(app);
-  //console.log('Firebase initialized', db);
+  console.log('Firebase initialized', app);
   const loggedIn = false; // debug
   //const loggedIn = true; // debug
 
