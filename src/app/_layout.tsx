@@ -10,7 +10,6 @@ import LoginScreen from '@/components/LoginScreen';
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,15 +19,20 @@ const RootLayout = () => {
     DMSans: require('../../assets/fonts/DMSans-Regular.ttf')
   });
 
-  //useEffect(() => {
-  //  if (loaded) {
-  //    SplashScreen.hideAsync();
-  //  }
-  //}, [loaded]);
+  const [user, setUser] = useState<{
+    displayName: string;
+    photoURL: string;
+  }>();
 
-  //if (!loaded) {
-  //  return null;
-  //}
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
+  if (!loaded) {
+    return null;
+  }
 
   // Firebase
   // TODO: Add SDKs for Firebase products that you want to use
@@ -36,20 +40,20 @@ const RootLayout = () => {
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: "AIzaSyC7wmWxBueAM6PbqaIz7GMr_GeEKCl45d0",
-    authDomain: "diary-companion42.firebaseapp.com",
-    projectId: "diary-companion42",
-    storageBucket: "diary-companion42.appspot.com",
-    messagingSenderId: "253645402800",
-    appId: "1:253645402800:web:fd11696bf960710d720175"
+    apiKey: 'AIzaSyC7wmWxBueAM6PbqaIz7GMr_GeEKCl45d0',
+    authDomain: 'diary-companion42.firebaseapp.com',
+    projectId: 'diary-companion42',
+    storageBucket: 'diary-companion42.appspot.com',
+    messagingSenderId: '253645402800',
+    appId: '1:253645402800:web:fd11696bf960710d720175'
   };
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+  //const db = getFirestore(app);
   //console.log('Firebase initialized', db);
   const loggedIn = false; // debug
-  ////const loggedIn = true; // debug
+  //const loggedIn = true; // debug
 
   return (
     <View style={styles.container}>
@@ -67,7 +71,7 @@ const RootLayout = () => {
           <Stack.Screen name="+not-found" />
         </Stack>
       ) : (
-        <LoginScreen />
+        <LoginScreen user={user} setUser={setUser} />
       )}
     </View>
   );
@@ -81,8 +85,8 @@ const styles = StyleSheet.create({
   containerLogin: {
     flex: 1,
     backgroundColor: C42_VIOLET,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

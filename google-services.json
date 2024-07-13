@@ -14,11 +14,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "253645402800-qdegnum5j3077l6qlvip7voq7b8hn20o.apps.googleusercontent.com",
+          "client_id": "253645402800-9nfhn5oc4j2985i9qe37igpa9ov19quc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.krivtsoff.diary.companion42",
-            "certificate_hash": "315303c4c3e6e9429705c300b0d1f38042edda8c"
+            "certificate_hash": "cfeeffa138c8f95e16445e09294dd5bd8f55905b"
+          }
+        },
+        {
+          "client_id": "253645402800-g2gt40pjij84j4v9eaajupq02a3otcdb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.krivtsoff.diary.companion42",
+            "certificate_hash": "68ee2155745c1238d1c5e8e1427e2301e9c769a7"
           }
         },
         {

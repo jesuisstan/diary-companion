@@ -22,3 +22,6 @@ web/
 
 expo-env.d.ts
 # @end expo-cli
+
+#credentials
+google-services.json
