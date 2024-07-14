@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import 'expo-dev-client';
@@ -6,37 +7,48 @@ import {
   GoogleSigninButton,
   statusCodes
 } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
-import { useState, useEffect } from 'react';
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithCredential,
+  User
+} from 'firebase/auth';
+import { app } from '@/utils/firebase';
 
-const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
+interface LoginScreenProps {
+  user: User | null;
+  setUser: (user: User | null) => void;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ user, setUser }) => {
   GoogleSignin.configure({
-    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID, // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-    //scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-    forceCodeForRefreshToken: true // [Android] related to `serverAuthCode`, read the docs link below *.
+    webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID!,
+    offlineAccess: true,
+    forceCodeForRefreshToken: true
   });
+
+  const auth = getAuth(app);
 
   const [initializing, setInitializing] = useState(true);
 
-  // Handle user state changes
-  const onAuthStateChanged = (user: any) => {
+  const onAuthStateChanged = (user: User | null) => {
     setUser(user);
     if (initializing) setInitializing(false);
   };
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    const unsubscribe = auth.onAuthStateChanged(onAuthStateChanged);
+    return () => unsubscribe(); // unsubscribe on unmount
   }, []);
 
   const onGoogleButtonPress = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      const user_sign_in = await auth().signInWithCredential(googleCredential);
-      console.log('Signed in with Google! User:', user_sign_in);
+      const googleCredential = GoogleAuthProvider.credential(idToken);
+      const userCredential = await signInWithCredential(auth, googleCredential);
+      setUser(userCredential.user);
+      console.log('Signed in with Google! User:', userCredential.user);
     } catch (error: any) {
       if (error.code) {
         switch (error.code) {
@@ -50,13 +62,10 @@ const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
             console.error('Play services not available');
             break;
           default:
-            console.error(
-              'Error signing in with Google:',
-              JSON.stringify(error, null, 2)
-            );
+            console.error('Error signing in with Google:', error);
         }
       } else {
-        console.error('Unknown error:', JSON.stringify(error, null, 2));
+        console.error('Unknown error:', error);
       }
     }
   };
@@ -64,7 +73,8 @@ const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
   const signOut = async () => {
     try {
       await GoogleSignin.revokeAccess();
-      await auth().signOut();
+      await auth.signOut();
+      setUser(null);
     } catch (error) {
       console.error(error);
     }
@@ -87,7 +97,7 @@ const LoginScreen = ({ user, setUser }: { user: any; setUser: any }) => {
     <View style={styles.container}>
       <Text>Welcome, {user.displayName}!</Text>
       <Image
-        source={{ uri: user.photoURL }}
+        source={{ uri: user.photoURL! }}
         style={{ width: 100, height: 100 }}
       />
       <Button title="Sign out" onPress={signOut} />

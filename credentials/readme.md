@@ -1,10 +1,30 @@
 ## Place all credential files for platforms into corresponding subfolders.
 
-1. Create desired subfolders for platforms:
+1. Create file "firebase-config.ts" in [root]/credentials/, paste firebase configuration info to it, export default:
+
+```
+const firebaseConfig = {
+  apiKey: '...',
+  authDomain: '...',
+  projectId: '...',
+  storageBucket: '...',
+  messagingSenderId: '...',
+  appId: '...'
+};
+
+export default firebaseConfig;
+```
+
+2. Create desired subfolders in the current folder "credentials" for platforms:
+
 - android
 - ios
 - web
-2. Copy "google-services.json" and "keystore.jks" (if applicable) to ./android folder
-3. Copy "" to ./ios folder
-4. Copy "" to ./web folder
-5. Proceed installation and running the project
+
+3. Copy "google-services.json" and "keystore.jks" (if applicable) to [root]/credentials/android folder
+
+4. Copy "" to [root]/credentials/ios folder
+
+5. Copy "" to [root]/credentials/web folder
+
+6. Proceed to installation and running the project

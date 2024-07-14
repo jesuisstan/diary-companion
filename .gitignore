@@ -12,9 +12,7 @@ web-build/
 android/
 ios/
 web/
-credentials/andriod
-credentials/ios
-credentials/web
+
 
 # macOS
 .DS_Store
@@ -29,3 +27,7 @@ expo-env.d.ts
 #credentials
 google-services.json
 credentials.json
+credentials/andriod
+credentials/ios
+credentials/web
+credentials/firebase-config.js
