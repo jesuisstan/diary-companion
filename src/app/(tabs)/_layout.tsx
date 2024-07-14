@@ -12,6 +12,8 @@ import { Ionicons } from '@expo/vector-icons';
 import * as colors42 from '@/style/Colors';
 import HomeScreen from './index';
 import CalendarScreen from './calendar';
+import { useUser } from '@/contexts/UserContext';
+import DiaryHeader from '@/components/DiaryHeader';
 
 const initialLayout = { width: Dimensions.get('window').width };
 const windowHeight = Dimensions.get('window').height;
@@ -66,7 +68,7 @@ const TabLayout = () => {
 
   return (
     <View style={styles.container}>
-      {/*<View style={[styles.header]}></View>*/}
+      <DiaryHeader />
       <StatusBar
         animated={true}
         backgroundColor={colors42.C42_GREEN}
@@ -95,14 +97,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1
-  },
-  imageBackground: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    position: 'absolute'
   },
   tabBar: {
     backgroundColor: colors42.C42_GREEN,

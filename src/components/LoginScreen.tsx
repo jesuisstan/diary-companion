@@ -1,35 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import 'expo-dev-client';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes
 } from '@react-native-google-signin/google-signin';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithCredential,
-  User
-} from 'firebase/auth';
-import { app } from '@/utils/firebase';
+import { GoogleAuthProvider, signInWithCredential, User } from 'firebase/auth';
+import { auth } from '@/utils/firebase';
+import { useUser } from '@/contexts/UserContext';
+import { C42_GREEN } from '@/style/Colors';
+import { ThemedText } from './ui/ThemedText';
+import shootAlert from '@/utils/shoot-alert';
 
-interface LoginScreenProps {
-  user: User | null;
-  setUser: (user: User | null) => void;
-}
+const LoginScreen: React.FC = () => {
+  const { setUser } = useUser();
+  const [initializing, setInitializing] = useState(true);
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ user, setUser }) => {
   GoogleSignin.configure({
     webClientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID!,
     offlineAccess: true,
     forceCodeForRefreshToken: true
   });
-
-  const auth = getAuth(app);
-
-  const [initializing, setInitializing] = useState(true);
 
   const onAuthStateChanged = (user: User | null) => {
     setUser(user);
@@ -48,60 +40,39 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ user, setUser }) => {
       const googleCredential = GoogleAuthProvider.credential(idToken);
       const userCredential = await signInWithCredential(auth, googleCredential);
       setUser(userCredential.user);
-      console.log('Signed in with Google! User:', userCredential.user);
     } catch (error: any) {
       if (error.code) {
         switch (error.code) {
           case statusCodes.SIGN_IN_CANCELLED:
-            console.error('Sign in was cancelled');
+            shootAlert('Oops!', 'Sign in was cancelled.');
             break;
           case statusCodes.IN_PROGRESS:
-            console.error('Sign in is in progress');
+            shootAlert('Pending...', 'Sign in is in progress.');
             break;
           case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
-            console.error('Play services not available');
+            shootAlert('Error!', 'Play services not available.');
             break;
           default:
-            console.error('Error signing in with Google:', error);
+            shootAlert('Oops!', 'Error signing in with Google.');
         }
       } else {
-        console.error('Unknown error:', error);
+        shootAlert('Oops!', 'Unknown error. Try again later.');
       }
     }
   };
 
-  const signOut = async () => {
-    try {
-      await GoogleSignin.revokeAccess();
-      await auth.signOut();
-      setUser(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  if (initializing) return null;
-
-  if (!user) {
-    return (
-      <View style={styles.container}>
-        <GoogleSigninButton
-          style={{ width: 192, height: 48, marginTop: 200 }}
-          onPress={onGoogleButtonPress}
-        />
-      </View>
-    );
-  }
-
-  return (
+  return initializing ? null : (
     <View style={styles.container}>
-      <Text>Welcome, {user.displayName}!</Text>
       <Image
-        source={{ uri: user.photoURL! }}
-        style={{ width: 100, height: 100 }}
+        source={require('../../assets/images/favicon.png')}
+        style={{ width: 50, height: 50 }}
       />
-      <Button title="Sign out" onPress={signOut} />
-      <StatusBar style="auto" />
+      <ThemedText type="subtitle">Welcome to your</ThemedText>
+      <ThemedText type="title">Diary Companion</ThemedText>
+      <GoogleSigninButton
+        style={{ width: 192, height: 48 }}
+        onPress={onGoogleButtonPress}
+      />
     </View>
   );
 };
@@ -111,8 +82,9 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: C42_GREEN,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    gap: 21
   }
 });
