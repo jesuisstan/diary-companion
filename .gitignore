@@ -26,8 +26,9 @@ expo-env.d.ts
 
 #credentials
 google-services.json
+firebase-config.*
 credentials.json
 credentials/andriod
 credentials/ios
 credentials/web
-credentials/firebase-config.js
+credentials/firebase-config.*
