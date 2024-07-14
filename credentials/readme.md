@@ -15,7 +15,7 @@ const firebaseConfig = {
 export default firebaseConfig;
 ```
 
-2. Create desired subfolders in the current folder "credentials" for platforms:
+2. Create corresponding subfolders in the current folder "credentials" for platforms:
 
 - android
 - ios
@@ -23,8 +23,8 @@ export default firebaseConfig;
 
 3. Copy "google-services.json" and "keystore.jks" (if applicable) to [root]/credentials/android folder
 
-4. Copy "" to [root]/credentials/ios folder
+4. Copy "GoogleService-Info.plist" to [root]/credentials/ios folder
 
-5. Copy "" to [root]/credentials/web folder
+5. Copy any needed credentials to [root]/credentials/web folder
 
 6. Proceed to installation and running the project
