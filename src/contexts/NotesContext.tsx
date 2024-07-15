@@ -56,6 +56,12 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       querySnapshot.forEach((doc) => {
         fetchedNotes.push({ id: doc.id, ...doc.data() } as TNote);
       });
+
+      // Sort notes by date from newest to oldest
+      fetchedNotes.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+
       setNotes(fetchedNotes);
     } catch (e) {
       if (e instanceof TypeError && e.message === 'Network request failed') {

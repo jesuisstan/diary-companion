@@ -19,6 +19,7 @@ import shootAlert from '@/utils/shoot-alert';
 import { C42_TEXT, C42_GREEN, C42_GREY } from '@/style/Colors';
 
 const screenHeight = Dimensions.get('window').height;
+const MAX_LENGTH_TITLE = 15;
 
 const ButtonNewNote = () => {
   const { user } = useUser();
@@ -33,10 +34,13 @@ const ButtonNewNote = () => {
   };
 
   const handleTitleChange = (text: string) => {
-    if (text.length <= 21) {
+    if (text.length <= MAX_LENGTH_TITLE) {
       setTitle(text);
     } else {
-      shootAlert('Oops!', 'Title is too long. Max 21 symbols.');
+      shootAlert(
+        'Oops!',
+        `Title is too long. Max ${MAX_LENGTH_TITLE} symbols.`
+      );
     }
   };
 
@@ -75,9 +79,9 @@ const ButtonNewNote = () => {
               <TextInput
                 style={[
                   styles.inputTitle,
-                  title.length > 21 && { color: 'red' }
+                  title.length > MAX_LENGTH_TITLE && { color: 'red' }
                 ]}
-                placeholder="Add note title (max 21 symbol)"
+                placeholder={`Add note title (max ${MAX_LENGTH_TITLE} symbol)`}
                 value={title}
                 onChangeText={handleTitleChange}
               />
