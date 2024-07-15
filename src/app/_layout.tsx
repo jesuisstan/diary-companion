@@ -1,14 +1,11 @@
 import 'react-native-reanimated';
 import React, { useEffect } from 'react';
-import { View, StyleSheet, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 
-import LoginScreen from '@/components/LoginScreen';
-import { UserProvider, useUser } from '@/contexts/UserContext';
-import { NotesProvider, useNotes } from '@/contexts/NotesContext';
-import { C42_GREEN } from '@/style/Colors';
+import DiaryApp from '@/components/DiaryApp';
+import { UserProvider } from '@/contexts/UserContext';
+import { NotesProvider } from '@/contexts/NotesContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,48 +28,10 @@ const RootLayout = () => {
   return (
     <UserProvider>
       <NotesProvider>
-        <MainContent />
+        <DiaryApp />
       </NotesProvider>
     </UserProvider>
   );
 };
-
-const MainContent = () => {
-  const { user } = useUser();
-  const { fetchNotes } = useNotes();
-
-  useEffect(() => {
-    if (user) {
-      fetchNotes(user.email!);
-    }
-  }, [user]);
-
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor={C42_GREEN}
-        barStyle="dark-content"
-        showHideTransition="slide"
-        hidden={false}
-      />
-      {!user ? (
-        <LoginScreen />
-      ) : (
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      )}
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative'
-  }
-});
 
 export default RootLayout;

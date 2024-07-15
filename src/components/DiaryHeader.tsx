@@ -1,4 +1,4 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import { Header } from '@rneui/themed';
 
 import { useUser } from '@/contexts/UserContext';
@@ -17,9 +17,14 @@ const DiaryHeader = () => {
         <Image source={{ uri: user?.photoURL! }} style={styles.image} />
       }
       centerComponent={
-        <ThemedText type="subtitle" style={styles.centerComponent}>
-          {user?.displayName}
-        </ThemedText>
+        <View>
+          <ThemedText type="defaultSemiBold" style={styles.centerComponent}>
+            {user?.displayName?.split(' ')[0]}
+          </ThemedText>
+          <ThemedText type="subtitle" style={styles.centerComponent}>
+            {user?.displayName?.split(' ')[1]}
+          </ThemedText>
+        </View>
       }
       rightComponent={<ButtonLogOut />}
       placement="center"
@@ -40,7 +45,8 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   centerComponent: {
-    textAlign: 'center'
+    textAlign: 'center',
+    justifyContent: 'center'
   }
 });
 
