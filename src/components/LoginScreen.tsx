@@ -7,6 +7,7 @@ import {
   statusCodes
 } from '@react-native-google-signin/google-signin';
 import { GoogleAuthProvider, signInWithCredential, User } from 'firebase/auth';
+
 import { auth } from '@/utils/firebase';
 import { useUser } from '@/contexts/UserContext';
 import { C42_GREEN } from '@/style/Colors';

@@ -1,17 +1,14 @@
+import 'react-native-reanimated';
+import React, { useEffect } from 'react';
+import { View, StyleSheet, StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
-import 'react-native-reanimated';
-import { View, StyleSheet, StatusBar } from 'react-native';
-import { collection, getDocs, query, where } from 'firebase/firestore';
 
-import { db } from '@/utils/firebase';
-import { C42_GREEN } from '@/style/Colors';
 import LoginScreen from '@/components/LoginScreen';
 import { UserProvider, useUser } from '@/contexts/UserContext';
-import shootAlert from '@/utils/shoot-alert';
 import { NotesProvider, useNotes } from '@/contexts/NotesContext';
+import { C42_GREEN } from '@/style/Colors';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

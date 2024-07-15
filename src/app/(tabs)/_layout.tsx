@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Dimensions, StyleSheet, StatusBar } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import {
   TabView,
   TabBar,
@@ -9,12 +9,11 @@ import {
 } from 'react-native-tab-view';
 import { Ionicons } from '@expo/vector-icons';
 
-import * as colors42 from '@/style/Colors';
 import HomeScreen from './index';
 import CalendarScreen from './calendar';
-import { useUser } from '@/contexts/UserContext';
 import DiaryHeader from '@/components/DiaryHeader';
 import ButtonNewNote from '@/components/ui/ButtonNewNote';
+import * as colors42 from '@/style/Colors';
 
 const initialLayout = { width: Dimensions.get('window').width };
 const windowHeight = Dimensions.get('window').height;

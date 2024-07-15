@@ -1,21 +1,22 @@
 import 'react-native-reanimated';
+import { useState } from 'react';
 import {
   Pressable,
   StyleSheet,
   Text,
   TextInput,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { C42_TEXT, C42_GREEN, C42_GREY, C42_ORANGE } from '@/style/Colors';
-import { useNotes, feelingsMap } from '@/contexts/NotesContext';
 import { Button, Overlay } from '@rneui/themed';
-import { useState } from 'react';
+
 import { useUser } from '@/contexts/UserContext';
+import { useNotes, feelingsMap } from '@/contexts/NotesContext';
 import Spinner from '@/components/ui/Spinner';
-import { Dimensions } from 'react-native';
 import shootAlert from '@/utils/shoot-alert';
+import { C42_TEXT, C42_GREEN, C42_GREY } from '@/style/Colors';
 
 const screenHeight = Dimensions.get('window').height;
 

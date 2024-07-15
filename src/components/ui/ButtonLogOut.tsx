@@ -1,12 +1,13 @@
+import 'expo-dev-client';
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
-import 'expo-dev-client';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Ionicons } from '@expo/vector-icons';
+
 import { auth } from '@/utils/firebase';
 import { useUser } from '@/contexts/UserContext';
-import { C42_TEXT } from '@/style/Colors';
 import shootAlert from '@/utils/shoot-alert';
+import { C42_TEXT } from '@/style/Colors';
 
 const ButtonLogOut: React.FC = () => {
   const { setUser } = useUser();
