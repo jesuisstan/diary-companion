@@ -31,6 +31,7 @@ export const feelingsMap = {
 };
 
 interface NotesContextState {
+  loading: boolean;
   notes: TNote[];
   fetchNotes: (userEmail: string) => Promise<void>;
   addNewNote: (note: Omit<TNote, 'id'>) => Promise<void>;
@@ -41,9 +42,11 @@ const NotesContext = createContext<NotesContextState | undefined>(undefined);
 
 export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [notes, setNotes] = useState<TNote[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchNotes = async (userEmail: string) => {
     try {
+      setLoading(true);
       const notesQuery = query(
         collection(db, 'diary-companion-db'),
         where('email', '==', userEmail)
@@ -54,7 +57,9 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
         fetchedNotes.push({ id: doc.id, ...doc.data() } as TNote);
       });
       setNotes(fetchedNotes);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       shootAlert('Error!', 'Failed to fetch Firestore data.');
       console.error('Error fetching Firestore data: ', e); // debug
     }
@@ -62,9 +67,12 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const addNewNote = async (newNote: Omit<TNote, 'id'>) => {
     try {
+      setLoading(true);
       await addDoc(collection(db, 'diary-companion-db'), newNote);
       fetchNotes(newNote.email);
+      setLoading(false);
     } catch (e) {
+      setLoading(false);
       shootAlert('Error!', 'Failed to add new note.');
       console.error('Error adding new note: ', e); // debug
     }
@@ -75,6 +83,7 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       await deleteDoc(doc(db, 'diary-companion-db', note.id));
       fetchNotes(note.email);
     } catch (e) {
+      setLoading(false);
       shootAlert('Error!', 'Failed to delete note.');
       console.error('Error deleting note: ', e); // debug
     }
@@ -82,7 +91,7 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <NotesContext.Provider
-      value={{ notes, fetchNotes, addNewNote, deleteNote }}
+      value={{ loading, notes, fetchNotes, addNewNote, deleteNote }}
     >
       {children}
     </NotesContext.Provider>

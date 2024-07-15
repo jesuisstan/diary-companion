@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import 'expo-dev-client';
 import {
@@ -13,7 +13,7 @@ import { C42_GREEN } from '@/style/Colors';
 import { ThemedText } from './ui/ThemedText';
 import shootAlert from '@/utils/shoot-alert';
 
-const LoginScreen: React.FC = () => {
+const LoginScreen: FC = () => {
   const { setUser } = useUser();
   const [initializing, setInitializing] = useState(true);
 

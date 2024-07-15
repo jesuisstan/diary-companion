@@ -6,10 +6,10 @@ import { ThemedText } from '@/components/ui/ThemedText';
 import Collapsible from '@/components/ui/Collapsible';
 import Spinner from '@/components/ui/Spinner';
 import { feelingsMap, useNotes } from '@/contexts/NotesContext';
-import { C42_ORANGE, C42_TEXT } from '@/style/Colors';
+import { C42_GREY, C42_ORANGE, C42_TEXT } from '@/style/Colors';
 
 const HomeScreen = () => {
-  const { notes, fetchNotes, addNewNote, deleteNote } = useNotes();
+  const { loading, notes, deleteNote } = useNotes();
 
   return (
     <ScrollView
@@ -17,10 +17,14 @@ const HomeScreen = () => {
       contentContainerStyle={styles.containerContent}
     >
       <ThemedText type="title">Your Diary Notes</ThemedText>
-      {!notes ? (
-        <Spinner size={42} />
+      {!notes || loading ? (
+        <View style={styles.spinnerContainer}>
+          <Spinner size={42} />
+        </View>
       ) : notes.length === 0 ? (
-        <ThemedText type="default">No notes yet</ThemedText>
+        <View style={styles.spinnerContainer}>
+          <ThemedText type="default">No notes yet</ThemedText>
+        </View>
       ) : (
         <View style={styles.list}>
           {notes.map((note) => (
@@ -34,7 +38,7 @@ const HomeScreen = () => {
                 note.date
               }
             >
-              <View style={{ gap: 21 }}>
+              <View style={styles.card}>
                 <ThemedText type="default">{note.content}</ThemedText>
                 <Button
                   color={C42_ORANGE}
@@ -71,6 +75,19 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
     padding: 18,
-    gap: 18
+    gap: 21
+  },
+  spinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 18
+  },
+  card: {
+    gap: 10,
+    borderRadius: 1,
+    borderColor: C42_GREY,
+    borderWidth: 1,
+    padding: 10
   }
 });

@@ -21,15 +21,13 @@ const screenHeight = Dimensions.get('window').height;
 
 const ButtonNewNote = () => {
   const { user } = useUser();
-  const { addNewNote } = useNotes();
+  const { loading, addNewNote } = useNotes();
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [feeling, setFeeling] = useState<keyof typeof feelingsMap>('neutral');
-  const [loading, setLoading] = useState(false);
 
   const toggleOverlay = () => {
-    //setLoading(false);
     setVisible(!visible);
   };
 
@@ -46,7 +44,6 @@ const ButtonNewNote = () => {
       // Do not proceed if title or content is empty
       return;
     }
-    setLoading(true);
     await addNewNote({
       content,
       date: new Date().toISOString(),
@@ -58,7 +55,6 @@ const ButtonNewNote = () => {
     setContent('');
     setFeeling('neutral');
     toggleOverlay();
-    setLoading(false);
   };
 
   return (
