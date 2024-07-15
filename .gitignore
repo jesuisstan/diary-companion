@@ -13,7 +13,6 @@ android/
 ios/
 web/
 
-
 # macOS
 .DS_Store
 .idea
@@ -24,11 +23,20 @@ web/
 expo-env.d.ts
 # @end expo-cli
 
-#credentials
+# Ignore everything in the credentials folder
+credentials/*
+
+# Except for README.MD
+!credentials/README.MD
+
+# Other specific credentials files
 google-services.json
 firebase-config.*
 credentials.json
-credentials/andriod
-credentials/ios
-credentials/web
 credentials/firebase-config.*
+
+# local env files
+.env
+.env.development
+.env.production
+.env*.local

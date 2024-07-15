@@ -1,7 +1,7 @@
 const { exec } = require('child_process');
 
 const createSecretCommand =
-  'eas secret:create --scope project --name GOOGLE_SERVICES_JSON --type file --value ./credentials/android/google-services.json --force';
+  'eas secret:create --scope project --name GOOGLE_SERVICES_JSON --type file --value ./credentials/google-services.json --force';
 const pushSecretCommand =
   'npx eas secret:push --scope project --env-file ./.env --force';
 
