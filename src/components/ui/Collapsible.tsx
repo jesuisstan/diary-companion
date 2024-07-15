@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import { StyleSheet, Pressable } from 'react-native';
+import { FC, useState } from 'react';
+import { StyleSheet, Pressable, type ViewProps } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { ThemedText } from '@/components/ui/ThemedText';
 import ThemedView from '@/components/ui/ThemedView';
 import { C42_ORANGE } from '@/style/Colors';
 
-interface CollapsibleProps {
+type TCollapsibleProps = ViewProps & {
   title: string;
   children: React.ReactNode;
-}
+};
 
-const Collapsible: React.FC<CollapsibleProps> = ({ title, children }) => {
+const Collapsible: FC<TCollapsibleProps> = ({
+  style = {},
+  title,
+  children
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <ThemedView>
+    <ThemedView style={style}>
       <Pressable
         style={styles.heading}
         onPress={() => setIsOpen((value) => !value)}

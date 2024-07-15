@@ -85,7 +85,8 @@ const TabLayout = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: colors42.C42_BACKGROUND
   },
   tabBar: {
     backgroundColor: colors42.C42_GREEN,
