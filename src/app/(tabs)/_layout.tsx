@@ -14,6 +14,7 @@ import HomeScreen from './index';
 import CalendarScreen from './calendar';
 import { useUser } from '@/contexts/UserContext';
 import DiaryHeader from '@/components/DiaryHeader';
+import ButtonNewNote from '@/components/ui/ButtonNewNote';
 
 const initialLayout = { width: Dimensions.get('window').width };
 const windowHeight = Dimensions.get('window').height;
@@ -69,13 +70,6 @@ const TabLayout = () => {
   return (
     <View style={styles.container}>
       <DiaryHeader />
-      <StatusBar
-        animated={true}
-        backgroundColor={colors42.C42_GREEN}
-        barStyle={'dark-content'}
-        showHideTransition={'slide'}
-        hidden={false}
-      />
       <TabView
         navigationState={{ index, routes }}
         renderScene={windowHeight ? renderScene : () => null}
@@ -85,16 +79,12 @@ const TabLayout = () => {
         tabBarPosition="bottom"
         style={{ marginTop: 21 }}
       />
+      <ButtonNewNote />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    height: 100,
-    backgroundColor: colors42.C42_GREEN,
-    zIndex: 1
-  },
   container: {
     flex: 1
   },

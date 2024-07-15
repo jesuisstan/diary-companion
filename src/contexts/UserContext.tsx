@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { FC, createContext, ReactNode, useContext, useState } from 'react';
 import { User } from 'firebase/auth';
 
 interface UserContextType {
@@ -18,7 +18,11 @@ const initialUserContext: UserContextType = {
 
 const UserContext = createContext<UserContextType>(initialUserContext);
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider: FC<UserProviderProps> = ({
+  children
+}: {
+  children: ReactNode;
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
   return (

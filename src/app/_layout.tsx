@@ -4,16 +4,21 @@ import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect } from 'react';
 import 'react-native-reanimated';
 import { View, StyleSheet, StatusBar } from 'react-native';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
-import { C42_GREEN, C42_VIOLET } from '@/style/Colors';
+import { db } from '@/utils/firebase';
+import { C42_GREEN } from '@/style/Colors';
 import LoginScreen from '@/components/LoginScreen';
 import { UserProvider, useUser } from '@/contexts/UserContext';
+import shootAlert from '@/utils/shoot-alert';
+import { NotesProvider, useNotes } from '@/contexts/NotesContext';
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [loaded] = useFonts({
-    DMSans: require('../../assets/fonts/DMSans-Regular.ttf'),
+    DMSans: require('../../assets/fonts/DMSans-Regular.ttf')
   });
 
   useEffect(() => {
@@ -28,13 +33,22 @@ const RootLayout = () => {
 
   return (
     <UserProvider>
-      <MainContent />
+      <NotesProvider>
+        <MainContent />
+      </NotesProvider>
     </UserProvider>
   );
 };
 
 const MainContent = () => {
   const { user } = useUser();
+  const { fetchNotes } = useNotes();
+
+  useEffect(() => {
+    if (user) {
+      fetchNotes(user.email!);
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -60,8 +74,8 @@ const MainContent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
-  },
+    position: 'relative'
+  }
 });
 
 export default RootLayout;

@@ -16,7 +16,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "secrets": "node ./scripts/add-secrets-to-build.js",
-    "build:a:c:prod": "npx eas build -p android --profile production",
+    "build:a:c:prod": "npm run secrets && npx eas build -p android --profile production",
     "build:a:c:dev": "npm run secrets && npx eas build -p android --profile development"
   },
   "dependencies": {

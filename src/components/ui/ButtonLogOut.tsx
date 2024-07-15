@@ -8,7 +8,7 @@ import { useUser } from '@/contexts/UserContext';
 import { C42_TEXT } from '@/style/Colors';
 import shootAlert from '@/utils/shoot-alert';
 
-const LogoutButton: React.FC = () => {
+const ButtonLogOut: React.FC = () => {
   const { setUser } = useUser();
 
   const signOut = async () => {
@@ -23,12 +23,12 @@ const LogoutButton: React.FC = () => {
 
   return (
     <Pressable style={styles.container} onPress={signOut}>
-      <Ionicons name="exit" size={42} color={C42_TEXT} />
+      <Ionicons name="exit-outline" size={35} color={C42_TEXT} />
     </Pressable>
   );
 };
 
-export default LogoutButton;
+export default ButtonLogOut;
 
 const styles = StyleSheet.create({
   container: {

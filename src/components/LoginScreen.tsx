@@ -71,6 +71,7 @@ const LoginScreen: React.FC = () => {
       <ThemedText type="title">Diary Companion</ThemedText>
       <GoogleSigninButton
         style={{ width: 192, height: 48 }}
+        color="dark"
         onPress={onGoogleButtonPress}
       />
     </View>

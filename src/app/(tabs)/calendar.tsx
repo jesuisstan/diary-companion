@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 
 import Spinner from '@/components/ui/Spinner';
 
@@ -8,7 +8,8 @@ const CalendarScreen = () => {
       style={styles.container}
       contentContainerStyle={styles.containerContent}
     >
-      <Spinner size={21} />
+      <Spinner size={42} />
+      <Text>Coming soon...</Text>
     </ScrollView>
   );
 };
