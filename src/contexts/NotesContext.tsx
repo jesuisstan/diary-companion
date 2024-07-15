@@ -57,11 +57,15 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
         fetchedNotes.push({ id: doc.id, ...doc.data() } as TNote);
       });
       setNotes(fetchedNotes);
-      setLoading(false);
     } catch (e) {
-      setLoading(false);
-      shootAlert('Error!', 'Failed to fetch Firestore data.');
+      if (e instanceof TypeError && e.message === 'Network request failed') {
+        shootAlert('Network Error!', 'Please check your internet connection.');
+      } else {
+        shootAlert('Error!', 'Failed to fetch Firestore data.');
+      }
       console.error('Error fetching Firestore data: ', e); // debug
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -70,22 +74,32 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setLoading(true);
       await addDoc(collection(db, 'diary-companion-db'), newNote);
       fetchNotes(newNote.email);
-      setLoading(false);
     } catch (e) {
-      setLoading(false);
-      shootAlert('Error!', 'Failed to add new note.');
+      if (e instanceof TypeError && e.message === 'Network request failed') {
+        shootAlert('Network Error!', 'Please check your internet connection.');
+      } else {
+        shootAlert('Error!', 'Failed to add new note.');
+      }
       console.error('Error adding new note: ', e); // debug
+    } finally {
+      setLoading(false);
     }
   };
 
   const deleteNote = async (note: TNote) => {
     try {
+      setLoading(true);
       await deleteDoc(doc(db, 'diary-companion-db', note.id));
       fetchNotes(note.email);
     } catch (e) {
-      setLoading(false);
-      shootAlert('Error!', 'Failed to delete note.');
+      if (e instanceof TypeError && e.message === 'Network request failed') {
+        shootAlert('Network Error!', 'Please check your internet connection.');
+      } else {
+        shootAlert('Error!', 'Failed to delete note.');
+      }
       console.error('Error deleting note: ', e); // debug
+    } finally {
+      setLoading(false);
     }
   };
 
