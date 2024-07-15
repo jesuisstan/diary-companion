@@ -1,19 +1,6 @@
-## Place all credential files for platforms into corresponding subfolders.
+## Preparing credentials for the Application.
 
-1. Create file "firebase-config.ts" in [root]/credentials/, paste firebase configuration info to it, export default:
-
-```
-const firebaseConfig = {
-  apiKey: '...',
-  authDomain: '...',
-  projectId: '...',
-  storageBucket: '...',
-  messagingSenderId: '...',
-  appId: '...'
-};
-
-export default firebaseConfig;
-```
+1. Obtain firebaseConfig from [Firebase console](https://console.firebase.google.com/) (Web app) and paste values to corresponding .env variables.
 
 2. Copy "google-services.json" and "keystore.jks" (if applicable) to [root]/credentials/ folder
 
