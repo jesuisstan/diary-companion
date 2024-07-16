@@ -6,9 +6,12 @@ import { Stack } from 'expo-router';
 import LoginScreen from '@/components/LoginScreen';
 import { useUser } from '@/contexts/UserContext';
 import { useNotes } from '@/contexts/NotesContext';
+import { useNetwork } from '@/contexts/NetworkContext';
 import { C42_GREEN } from '@/style/Colors';
+import shootAlert from '@/utils/shoot-alert';
 
 const DiaryApp = () => {
+  const { isConnected } = useNetwork();
   const { user } = useUser();
   const { fetchNotes } = useNotes();
 
@@ -17,6 +20,12 @@ const DiaryApp = () => {
       fetchNotes(user.email!);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      shootAlert('Network Error!', 'Please check your internet connection.');
+    }
+  }, [isConnected]);
 
   return (
     <View style={styles.container}>

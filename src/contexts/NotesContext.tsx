@@ -10,6 +10,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '@/utils/firebase';
 import shootAlert from '@/utils/shoot-alert';
+import { useNetwork } from '@/contexts/NetworkContext';
 
 // Define the shape of the context state
 export type TNote = {
@@ -30,21 +31,27 @@ export const feelingsMap = {
   devastated: '😭'
 };
 
-interface NotesContextState {
+type TNotesContextState = {
   loading: boolean;
   notes: TNote[];
   fetchNotes: (userEmail: string) => Promise<void>;
   addNewNote: (note: Omit<TNote, 'id'>) => Promise<void>;
   deleteNote: (note: TNote) => Promise<void>;
-}
+};
 
-const NotesContext = createContext<NotesContextState | undefined>(undefined);
+const NotesContext = createContext<TNotesContextState | undefined>(undefined);
 
 export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [notes, setNotes] = useState<TNote[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { isConnected } = useNetwork(); // Get the network status
 
   const fetchNotes = async (userEmail: string) => {
+    if (!isConnected) {
+      shootAlert('Network Error!', 'Please check your internet connection.');
+      return;
+    }
+
     try {
       setLoading(true);
       const notesQuery = query(
@@ -69,13 +76,17 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       } else {
         shootAlert('Error!', 'Failed to fetch Firestore data.');
       }
-      console.error('Error fetching Firestore data: ', e); // debug
     } finally {
       setLoading(false);
     }
   };
 
   const addNewNote = async (newNote: Omit<TNote, 'id'>) => {
+    if (!isConnected) {
+      shootAlert('Network Error!', 'Please check your internet connection.');
+      return;
+    }
+
     try {
       setLoading(true);
       await addDoc(collection(db, 'diary-companion-db'), newNote);
@@ -86,13 +97,17 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       } else {
         shootAlert('Error!', 'Failed to add new note.');
       }
-      console.error('Error adding new note: ', e); // debug
     } finally {
       setLoading(false);
     }
   };
 
   const deleteNote = async (note: TNote) => {
+    if (!isConnected) {
+      shootAlert('Network Error!', 'Please check your internet connection.');
+      return;
+    }
+
     try {
       setLoading(true);
       await deleteDoc(doc(db, 'diary-companion-db', note.id));
@@ -103,7 +118,6 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
       } else {
         shootAlert('Error!', 'Failed to delete note.');
       }
-      console.error('Error deleting note: ', e); // debug
     } finally {
       setLoading(false);
     }
@@ -118,7 +132,7 @@ export const NotesProvider: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-export const useNotes = (): NotesContextState => {
+export const useNotes = (): TNotesContextState => {
   const context = useContext(NotesContext);
   if (context === undefined) {
     throw new Error('useNotes must be used within a NotesProvider');

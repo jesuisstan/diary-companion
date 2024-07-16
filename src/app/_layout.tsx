@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import DiaryApp from '@/components/DiaryApp';
 import { UserProvider } from '@/contexts/UserContext';
 import { NotesProvider } from '@/contexts/NotesContext';
+import { NetworkProvider } from '@/contexts/NetworkContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -26,11 +27,13 @@ const RootLayout = () => {
   }
 
   return (
-    <UserProvider>
-      <NotesProvider>
-        <DiaryApp />
-      </NotesProvider>
-    </UserProvider>
+    <NetworkProvider>
+      <UserProvider>
+        <NotesProvider>
+          <DiaryApp />
+        </NotesProvider>
+      </UserProvider>
+    </NetworkProvider>
   );
 };
 
