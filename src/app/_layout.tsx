@@ -2,6 +2,7 @@ import 'react-native-reanimated';
 import React, { useEffect } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import DiaryApp from '@/components/DiaryApp';
 import { UserProvider } from '@/contexts/UserContext';
@@ -17,6 +18,9 @@ const RootLayout = () => {
   });
 
   useEffect(() => {
+    // Set the initial screen orientation to allow all orientations
+    ScreenOrientation.unlockAsync();
+
     if (loaded) {
       SplashScreen.hideAsync();
     }

@@ -7,7 +7,8 @@ import {
   TextInput,
   View,
   TouchableOpacity,
-  Dimensions
+  ScrollView,
+  useWindowDimensions
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Button, Overlay } from '@rneui/themed';
@@ -18,10 +19,10 @@ import Spinner from '@/components/ui/Spinner';
 import shootAlert from '@/utils/shoot-alert';
 import { C42_TEXT, C42_GREEN, C42_GREY } from '@/style/Colors';
 
-const screenHeight = Dimensions.get('window').height;
 const MAX_LENGTH_TITLE = 15;
 
 const ButtonNewNote = () => {
+  const { height } = useWindowDimensions();
   const { user } = useUser();
   const { loading, addNewNote } = useNotes();
   const [visible, setVisible] = useState(false);
@@ -66,15 +67,13 @@ const ButtonNewNote = () => {
     <Pressable style={styles.floatingButton} onPress={toggleOverlay}>
       <AntDesign name="addfile" size={21} color={C42_TEXT} />
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-        <View
-          style={[styles.overlayContent, { minHeight: 0.5 * screenHeight }]}
-        >
+        <View style={[styles.overlayContent, { minHeight: 0.5 * height }]}>
           {loading ? (
             <View style={styles.spinnerContainer}>
               <Spinner size={42} />
             </View>
           ) : (
-            <>
+            <ScrollView contentContainerStyle={styles.scrollViewContent}>
               <Text style={styles.label}>Title:</Text>
               <TextInput
                 style={[
@@ -127,7 +126,7 @@ const ButtonNewNote = () => {
                 disabled={!title.trim() || !content.trim()}
                 onPress={submitNewNote}
               />
-            </>
+            </ScrollView>
           )}
         </View>
       </Overlay>
@@ -156,8 +155,10 @@ const styles = StyleSheet.create({
   },
   overlayContent: {
     padding: 20,
-    width: 300,
-    minHeight: 300
+    width: 300
+  },
+  scrollViewContent: {
+    flexGrow: 1
   },
   spinnerContainer: {
     flex: 1,

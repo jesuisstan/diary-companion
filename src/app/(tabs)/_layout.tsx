@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Dimensions, StyleSheet } from 'react-native';
+import { View, useWindowDimensions, StyleSheet } from 'react-native';
 import {
   TabView,
   TabBar,
@@ -15,22 +15,20 @@ import DiaryHeader from '@/components/DiaryHeader';
 import ButtonNewNote from '@/components/ui/ButtonNewNote';
 import * as colors42 from '@/style/Colors';
 
-const initialLayout = { width: Dimensions.get('window').width };
-const windowHeight = Dimensions.get('window').height;
-
 type RouteProps = Route & { icon: string };
 type State = NavigationState<RouteProps>;
 
 const TabLayout = () => {
+  const { width, height } = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const routes = [
-    { key: 'home', title: 'Home', icon: 'home' },
+    { key: 'profile', title: 'Profile', icon: 'home' },
     { key: 'calendar', title: 'Calendar', icon: 'calendar' }
   ];
 
   const renderScene = ({ route }: { route: { key: string } }) => {
     switch (route.key) {
-      case 'home':
+      case 'profile':
         return <HomeScreen />;
       case 'calendar':
         return <CalendarScreen />;
@@ -71,9 +69,9 @@ const TabLayout = () => {
       <DiaryHeader />
       <TabView
         navigationState={{ index, routes }}
-        renderScene={windowHeight ? renderScene : () => null}
+        renderScene={height ? renderScene : () => null}
         onIndexChange={setIndex}
-        initialLayout={initialLayout}
+        initialLayout={{ width }}
         renderTabBar={renderTabBar}
         tabBarPosition="bottom"
         style={{ marginTop: 21 }}
