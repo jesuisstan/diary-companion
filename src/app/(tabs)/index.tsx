@@ -1,10 +1,10 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-
+import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { useNotes } from '@/contexts/NotesContext';
 import NotesList from '@/components/NotesList';
 import Spinner from '@/components/ui/Spinner';
 import { ThemedText } from '@/components/ui/ThemedText';
-import { C42_BACKGROUND } from '@/style/Colors';
+import { C42_BACKGROUND, C42_GREEN } from '@/style/Colors';
+import NotesAnalysis from '@/components/NotesAnalysis';
 
 const HomeScreen = () => {
   const { loading, notes } = useNotes();
@@ -21,7 +21,17 @@ const HomeScreen = () => {
             <Spinner size={42} />
           </View>
         ) : (
-          <NotesList notes={notes} />
+          <>
+            <ThemedText type="defaultSemiBold" style={styles.leftAlignedText}>
+              The last notes:
+            </ThemedText>
+            <NotesList notes={notes.slice(0, 2)} />
+            <ThemedText type="defaultSemiBold" style={styles.leftAlignedText}>
+              The vibe of your{' '}
+              <Text style={styles.ammount}>{notes.length}</Text> notes:
+            </ThemedText>
+            <NotesAnalysis notes={notes} />
+          </>
         )}
       </ScrollView>
     </View>
@@ -49,12 +59,24 @@ const styles = StyleSheet.create({
     height: 50 // Adjust height to match the height of the fixed title
   },
   containerContent: {
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: 10
   },
   spinnerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 18
+  },
+  ammount: {
+    fontWeight: 'bold',
+    color: C42_GREEN,
+    fontSize: 21
+  },
+  leftAlignedText: {
+    textAlign: 'left',
+    width: '100%',
+    paddingLeft: 21,
+    paddingRight: 21
   }
 });

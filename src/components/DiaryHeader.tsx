@@ -2,7 +2,7 @@ import { StyleSheet, Image, View } from 'react-native';
 import { Header } from '@rneui/themed';
 
 import { useUser } from '@/contexts/UserContext';
-import ButtonLogOut from '@/components/ui/ButtonLogOut';
+import ButtonLogOut from '@/components/ButtonLogOut';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { C42_GREEN } from '@/style/Colors';
 

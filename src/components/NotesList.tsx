@@ -1,12 +1,12 @@
-import { StyleSheet, View } from 'react-native';
-import { Button } from '@rneui/themed';
+import { StyleSheet, View, Text } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 import { ThemedText } from '@/components/ui/ThemedText';
 import Collapsible from '@/components/ui/Collapsible';
 import { feelingsMap, TNote, useNotes } from '@/contexts/NotesContext';
-import { C42_GREY, C42_ORANGE, C42_TEXT } from '@/style/Colors';
+import { C42_GREY, C42_ORANGE } from '@/style/Colors';
 import { formatDate } from '@/utils/format-date';
+import getFeelingColor from '@/utils/get-feeling-color';
 
 const NotesList = ({ notes }: { notes: TNote[] }) => {
   const { deleteNote } = useNotes();
@@ -22,22 +22,23 @@ const NotesList = ({ notes }: { notes: TNote[] }) => {
           >
             <View style={styles.card}>
               <ThemedText type="defaultSemiBold">
-                {`Feels: ${note.feeling} | ${feelingsMap[note.feeling]}`}
+                Feels:{' '}
+                <Text
+                  style={{
+                    color: getFeelingColor(note.feeling as TNote['feeling'])
+                  }}
+                >
+                  {note.feeling}
+                </Text>{' '}
+                | {feelingsMap[note.feeling]}
               </ThemedText>
               <ThemedText type="default">{note.content}</ThemedText>
-              <Button
+              <AntDesign
+                name="delete"
+                size={21}
                 color={C42_ORANGE}
-                icon={
-                  <AntDesign
-                    name="delete"
-                    size={21}
-                    color={C42_TEXT}
-                    style={{ marginRight: 21 }}
-                  />
-                }
-                title="Delete note"
-                titleStyle={{ color: C42_TEXT }}
                 onPress={() => deleteNote(note)}
+                style={{ paddingTop: 10 }}
               />
             </View>
           </Collapsible>
@@ -66,7 +67,10 @@ const styles = StyleSheet.create({
   },
   card: {
     gap: 10,
-    padding: 10
+    padding: 10,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start'
   },
   collapsible: {
     borderColor: C42_GREY,

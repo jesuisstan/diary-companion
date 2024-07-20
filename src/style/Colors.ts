@@ -15,6 +15,7 @@ export const C42_TEXT = '#2c2c34';
 export const C42_TEXT_DARK = '#ED8179';
 export const C42_BACKGROUND = '#FFFFFF';
 export const C42_BACKGROUND_DARK = '#151718';
+export const C42_RED = '#ce3a49';
 
 export const Colors = {
   light: {

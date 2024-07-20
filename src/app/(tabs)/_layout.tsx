@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './index';
 import CalendarScreen from './calendar';
 import DiaryHeader from '@/components/DiaryHeader';
-import ButtonNewNote from '@/components/ui/ButtonNewNote';
+import ButtonNewNote from '@/components/ButtonNewNote';
 import * as colors42 from '@/style/Colors';
 
 type RouteProps = Route & { icon: string };
@@ -22,7 +22,7 @@ const TabLayout = () => {
   const { width, height } = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const routes = [
-    { key: 'profile', title: 'Profile', icon: 'home' },
+    { key: 'profile', title: 'Profile', icon: 'documents' },
     { key: 'calendar', title: 'Calendar', icon: 'calendar' }
   ];
 
