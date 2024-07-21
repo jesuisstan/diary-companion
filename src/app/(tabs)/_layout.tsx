@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, useWindowDimensions, StyleSheet } from 'react-native';
+import { View, useWindowDimensions, StyleSheet, Text } from 'react-native';
 import {
   TabView,
   TabBar,
@@ -10,7 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import HomeScreen from './index';
-import CalendarScreen from './calendar';
+import AgendaScreen from './agenda';
 import DiaryHeader from '@/components/DiaryHeader';
 import ButtonNewNote from '@/components/ButtonNewNote';
 import * as colors42 from '@/style/Colors';
@@ -23,15 +23,17 @@ const TabLayout = () => {
   const [index, setIndex] = useState(0);
   const routes = [
     { key: 'profile', title: 'Profile', icon: 'documents' },
-    { key: 'calendar', title: 'Calendar', icon: 'calendar' }
+    { key: 'agenda', title: 'Agenda', icon: 'calendar' }
   ];
+
+  const isLandscape = width > height;
 
   const renderScene = ({ route }: { route: { key: string } }) => {
     switch (route.key) {
       case 'profile':
         return <HomeScreen />;
-      case 'calendar':
-        return <CalendarScreen />;
+      case 'agenda':
+        return <AgendaScreen />;
       default:
         return null;
     }
@@ -43,12 +45,36 @@ const TabLayout = () => {
   }: {
     route: RouteProps;
     focused: boolean;
+  }) =>
+    isLandscape ? null : (
+      <Ionicons
+        name={focused ? (route.icon as any) : (`${route.icon}-outline` as any)}
+        size={21}
+        color={focused ? colors42.C42_ORANGE_DARK : colors42.C42_TEXT}
+      />
+    );
+
+  const renderLabel = ({
+    route,
+    focused
+  }: {
+    route: RouteProps;
+    focused: boolean;
   }) => (
-    <Ionicons
-      name={focused ? (route.icon as any) : (`${route.icon}-outline` as any)}
-      size={21}
-      color={focused ? colors42.C42_ORANGE_DARK : colors42.C42_TEXT}
-    />
+    <Text
+      style={[
+        styles.label,
+        {
+          color:
+            focused && isLandscape
+              ? colors42.C42_ORANGE_DARK
+              : colors42.C42_TEXT,
+          fontSize: isLandscape ? 15 : 10
+        }
+      ]}
+    >
+      {route.title}
+    </Text>
   );
 
   const renderTabBar = (
@@ -59,8 +85,8 @@ const TabLayout = () => {
       renderIcon={renderIcon}
       style={styles.tabBar}
       indicatorStyle={styles.indicator}
-      labelStyle={styles.label}
       pressColor="transparent"
+      renderLabel={renderLabel}
     />
   );
 
@@ -74,7 +100,7 @@ const TabLayout = () => {
         initialLayout={{ width }}
         renderTabBar={renderTabBar}
         tabBarPosition="bottom"
-        style={{ marginTop: 21 }}
+        style={{ marginTop: isLandscape ? 0 : 21 }}
       />
       <ButtonNewNote />
     </View>

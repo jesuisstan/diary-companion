@@ -1,10 +1,11 @@
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
+
 import { useNotes } from '@/contexts/NotesContext';
 import NotesList from '@/components/NotesList';
+import NotesAnalysis from '@/components/NotesAnalysis';
 import Spinner from '@/components/ui/Spinner';
 import { ThemedText } from '@/components/ui/ThemedText';
 import { C42_BACKGROUND, C42_GREEN } from '@/style/Colors';
-import NotesAnalysis from '@/components/NotesAnalysis';
 
 const HomeScreen = () => {
   const { loading, notes } = useNotes();
@@ -12,7 +13,7 @@ const HomeScreen = () => {
   return (
     <View style={styles.container}>
       <ThemedText type="title" style={styles.fixedTitle}>
-        Your Diary Notes
+        Recent Notes & Vibes
       </ThemedText>
       <ScrollView contentContainerStyle={styles.containerContent}>
         <View style={styles.spacer} />
@@ -23,14 +24,22 @@ const HomeScreen = () => {
         ) : (
           <>
             <ThemedText type="defaultSemiBold" style={styles.leftAlignedText}>
-              The last notes:
+              The last diary notes:
             </ThemedText>
             <NotesList notes={notes.slice(0, 2)} />
-            <ThemedText type="defaultSemiBold" style={styles.leftAlignedText}>
-              The vibe of your{' '}
-              <Text style={styles.ammount}>{notes.length}</Text> notes:
-            </ThemedText>
-            <NotesAnalysis notes={notes} />
+            {notes && (
+              <>
+                <ThemedText
+                  type="defaultSemiBold"
+                  style={styles.leftAlignedText}
+                >
+                  The vibe of your{' '}
+                  <Text style={styles.ammount}>{notes.length}</Text> diary
+                  notes:
+                </ThemedText>
+                <NotesAnalysis notes={notes} />
+              </>
+            )}
           </>
         )}
       </ScrollView>
