@@ -32,6 +32,7 @@ Step 3. **Set Up Firebase**
 
 - Create a new Firebase project in the [Google Firebase Console](https://console.firebase.google.com/).
 - Obtain `firebaseConfig` from the Firebase Console (Web app) and paste the values into the corresponding variables in your `.env` file.
+- Obtain `google-services.json` from the Firebase Console (Android app) and paste the value of `client_id` (group `"client_type": 3`) to `EXPO_PUBLIC_WEB_CLIENT_ID` value.
 
 Step 4. **Add Required Files**
 
