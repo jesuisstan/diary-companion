@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+
 import { TNote, feelingsMap } from '@/contexts/NotesContext';
-import { C42_BACKGROUND, C42_GREY, C42_ORANGE } from '@/style/Colors';
 import getFeelingColor from '@/utils/get-feeling-color';
+import { C42_GREY, C42_WHITE } from '@/style/Colors';
 
 type TNotesAnalysisProps = {
   notes: TNote[];
@@ -68,7 +69,7 @@ const styles = StyleSheet.create({
     minWidth: '60%',
     width: '80%',
     maxWidth: '90%',
-    backgroundColor: C42_BACKGROUND
+    backgroundColor: C42_WHITE
   },
   feelingRow: {
     flexDirection: 'row',

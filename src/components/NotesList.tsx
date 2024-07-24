@@ -4,9 +4,9 @@ import { AntDesign } from '@expo/vector-icons';
 import { ThemedText } from '@/components/ui/ThemedText';
 import Collapsible from '@/components/ui/Collapsible';
 import { feelingsMap, TNote, useNotes } from '@/contexts/NotesContext';
-import { C42_GREY, C42_ORANGE } from '@/style/Colors';
 import { formatDate } from '@/utils/format-date';
 import getFeelingColor from '@/utils/get-feeling-color';
+import { C42_GREY, C42_ORANGE, C42_WHITE } from '@/style/Colors';
 
 const NotesList = ({ notes }: { notes: TNote[] }) => {
   const { deleteNote } = useNotes();
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     borderColor: C42_GREY,
     borderRadius: 10,
     borderWidth: 1,
-    padding: 10
+    padding: 10,
+    backgroundColor: C42_WHITE
   }
 });

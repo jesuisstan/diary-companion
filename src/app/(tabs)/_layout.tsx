@@ -100,7 +100,7 @@ const TabLayout = () => {
         initialLayout={{ width }}
         renderTabBar={renderTabBar}
         tabBarPosition="bottom"
-        style={{ marginTop: isLandscape ? 0 : 21 }}
+        style={{ marginTop: isLandscape ? 10 : 21 }}
       />
       <ButtonNewNote />
     </View>

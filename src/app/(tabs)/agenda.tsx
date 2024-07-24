@@ -10,7 +10,9 @@ import { Calendar } from 'react-native-calendars';
 
 import { useNotes } from '@/contexts/NotesContext';
 import NotesList from '@/components/NotesList';
+import { ThemedText } from '@/components/ui/ThemedText';
 import Spinner from '@/components/ui/Spinner';
+import { formatSelectedDate } from '@/utils/format-date';
 import { C42_GREY, C42_ORANGE } from '@/style/Colors';
 
 type TCalendarDay = {
@@ -79,6 +81,9 @@ const AgendaScreen = () => {
         </View>
       ) : (
         <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ThemedText style={{ textAlign: 'center' }}>
+            {formatSelectedDate(selected)}
+          </ThemedText>
           <NotesList notes={filteredNotes} />
         </ScrollView>
       )}

@@ -17,7 +17,7 @@ import { useUser } from '@/contexts/UserContext';
 import { useNotes, feelingsMap } from '@/contexts/NotesContext';
 import Spinner from '@/components/ui/Spinner';
 import shootAlert from '@/utils/shoot-alert';
-import { C42_TEXT, C42_GREEN, C42_GREY } from '@/style/Colors';
+import { C42_TEXT, C42_GREEN, C42_GREY, C42_WHITE } from '@/style/Colors';
 
 const MAX_LENGTH_TITLE = 15;
 
@@ -155,7 +155,8 @@ const styles = StyleSheet.create({
   },
   overlayContent: {
     padding: 20,
-    width: 300
+    width: 300,
+    backgroundColor: C42_WHITE
   },
   scrollViewContent: {
     flexGrow: 1
